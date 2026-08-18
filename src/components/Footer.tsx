@@ -1,13 +1,14 @@
 import React from 'react';
 import { ActiveTab } from '../types';
-import { Sparkles, Heart, BookOpen, Feather, Flower2, UserCheck, ShieldCheck } from 'lucide-react';
+import { Sparkles, Heart, BookOpen, Feather, Flower2, UserCheck, ShieldCheck, FileDown } from 'lucide-react';
 import { soundManager } from '../utils/audioSynth';
 
 interface FooterProps {
   setActiveTab: (tab: ActiveTab) => void;
+  onOpenPdfModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
+export const Footer: React.FC<FooterProps> = ({ setActiveTab, onOpenPdfModal }) => {
   const handleNav = (tab: ActiveTab) => {
     soundManager.playSingingBowl(440, 1.0);
     setActiveTab(tab);
@@ -131,6 +132,17 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                   className="hover:text-rose-300 transition-colors"
                 >
                   Oásis de Paz & Respiração
+                </button>
+              </li>
+              <li className="pt-2">
+                <button
+                  onClick={() => {
+                    if (onOpenPdfModal) onOpenPdfModal();
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-900/90 hover:bg-emerald-800 text-rose-300 border border-emerald-700/80 font-semibold transition-all cursor-pointer"
+                >
+                  <FileDown className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Baixar Livro Completo (PDF)</span>
                 </button>
               </li>
             </ul>

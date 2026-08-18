@@ -1,13 +1,14 @@
 import React from 'react';
 import { ActiveTab } from '../types';
-import { Sparkles, ArrowRight, ShieldCheck, HeartHandshake, BookOpen, Compass, Flower2, Heart } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, HeartHandshake, BookOpen, Compass, Flower2, Heart, FileDown } from 'lucide-react';
 import { soundManager } from '../utils/audioSynth';
 
 interface HeroSectionProps {
   setActiveTab: (tab: ActiveTab) => void;
+  onOpenPdfModal?: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ setActiveTab }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ setActiveTab, onOpenPdfModal }) => {
   const handleCta = (tab: ActiveTab) => {
     soundManager.playSingingBowl(528, 2.0);
     setActiveTab(tab);
@@ -51,19 +52,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ setActiveTab }) => {
             <button
               id="hero-btn-identity-worth"
               onClick={() => handleCta('identity-worth')}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white hover:bg-rose-50 text-rose-800 border border-pink-300 text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-xs transition-all transform hover:-translate-y-0.5"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white hover:bg-rose-50 text-rose-800 border border-pink-300 text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-xs transition-all transform hover:-translate-y-0.5"
             >
               <Heart className="w-4 h-4 text-rose-600" />
               <span>Autoestima & Valor Próprio</span>
             </button>
 
             <button
-              id="hero-btn-reflection-lab"
-              onClick={() => handleCta('reflection-lab')}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-200 text-sm font-medium tracking-wide flex items-center justify-center gap-2 shadow-xs transition-all"
+              id="hero-btn-download-pdf"
+              onClick={() => {
+                if (onOpenPdfModal) onOpenPdfModal();
+              }}
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white hover:bg-emerald-50 text-emerald-950 border border-emerald-300 text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer transform hover:-translate-y-0.5"
             >
-              <Compass className="w-4 h-4 text-emerald-600" />
-              <span>Laboratório</span>
+              <FileDown className="w-4 h-4 text-emerald-700" />
+              <span>Baixar Livro Completo (PDF)</span>
             </button>
           </div>
         </div>

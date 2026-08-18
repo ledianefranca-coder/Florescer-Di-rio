@@ -12,6 +12,7 @@ import { RelationshipsGuide } from './components/RelationshipsGuide';
 import { ArchetypesSection } from './components/ArchetypesSection';
 import { SoulJournal } from './components/SoulJournal';
 import { PeaceSanctuary } from './components/PeaceSanctuary';
+import { PdfExportModal } from './components/PdfExportModal';
 import { Footer } from './components/Footer';
 import {
   Sparkles,
@@ -31,6 +32,7 @@ import orangeBlossomBranchImg from './assets/images/orange_blossom_branch_178699
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [externalJournalEntry, setExternalJournalEntry] = useState<Partial<JournalEntry> | null>(null);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
 
   const handleSaveFromReflectionLab = (entry: Partial<JournalEntry>) => {
     setExternalJournalEntry(entry);
@@ -46,14 +48,21 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F9FCFA] text-[#143823]">
       {/* Top Navigation */}
-      <Navbar activeTab={activeTab} setActiveTab={handleNavigate} />
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={handleNavigate}
+        onOpenPdfModal={() => setIsPdfModalOpen(true)}
+      />
 
       {/* Main Content Area */}
       <main className="flex-1">
         {activeTab === 'home' && (
           <div className="space-y-6">
             {/* Hero */}
-            <HeroSection setActiveTab={handleNavigate} />
+            <HeroSection
+              setActiveTab={handleNavigate}
+              onOpenPdfModal={() => setIsPdfModalOpen(true)}
+            />
 
             {/* Wildflowers Meadow Reflections Showcase */}
             <div className="border-t border-emerald-100">
@@ -191,7 +200,16 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer setActiveTab={handleNavigate} />
+      <Footer
+        setActiveTab={handleNavigate}
+        onOpenPdfModal={() => setIsPdfModalOpen(true)}
+      />
+
+      {/* Complete PDF Export Modal */}
+      <PdfExportModal
+        isOpen={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+      />
     </div>
   );
 }

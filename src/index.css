@@ -59,3 +59,65 @@
   box-shadow: 0 0 35px -5px rgba(52, 211, 153, 0.25);
 }
 
+/* Print & PDF Export Styles */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+  
+  #printable-florescer-book, #printable-florescer-book * {
+    visibility: visible;
+  }
+  
+  #printable-florescer-book {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #FFFFFF !important;
+  }
+
+  .pdf-a4-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin: 0 !important;
+    padding: 16mm 18mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    background: #FCFAF7 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  header, footer, button, .no-print {
+    display: none !important;
+  }
+}
+

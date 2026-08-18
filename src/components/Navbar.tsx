@@ -16,15 +16,17 @@ import {
   Heart,
   ChevronLeft,
   ChevronRight,
+  FileDown,
 } from 'lucide-react';
 import { soundManager } from '../utils/audioSynth';
 
 interface NavbarProps {
   activeTab: ActiveTab;
   setActiveTab: (tab: ActiveTab) => void;
+  onOpenPdfModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenPdfModal }) => {
   const [isMuted, setIsMuted] = useState(soundManager.getMuted());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollNavRef = useRef<HTMLDivElement>(null);
@@ -102,6 +104,21 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               }`}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-emerald-800 animate-pulse" />}
+            </button>
+
+            {/* Botão Baixar Livro em PDF */}
+            <button
+              id="header-cta-pdf"
+              onClick={() => {
+                if (onOpenPdfModal) {
+                  onOpenPdfModal();
+                }
+              }}
+              title="Baixar livro e compêndio completo do Florescer Diário em PDF"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-semibold shadow-2xs hover:shadow-sm transition-all cursor-pointer flex-shrink-0"
+            >
+              <FileDown className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Baixar em PDF</span>
             </button>
 
             {/* Botão Falar com a Mentora - Ícone Florescer Diário & Cor Rosa */}
@@ -195,7 +212,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               </button>
             );
           })}
-          <div className="pt-2 border-t border-emerald-200">
+          <div className="pt-2 border-t border-emerald-200 space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenPdfModal) onOpenPdfModal();
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-300 font-semibold text-xs shadow-xs cursor-pointer"
+            >
+              <FileDown className="w-4 h-4 text-emerald-700" />
+              <span>Baixar Livro Completo em PDF</span>
+            </button>
+
             <button
               onClick={() => handleNavClick('mentor')}
               className="w-full flex items-center justify-center gap-2.5 py-3 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-semibold text-sm shadow-sm border border-pink-200 cursor-pointer"
