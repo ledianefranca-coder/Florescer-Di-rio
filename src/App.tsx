@@ -141,12 +141,8 @@ export default function App() {
                     className="cursor-pointer group bg-white rounded-3xl p-7 border border-emerald-200 shadow-2xs hover:shadow-md transition-all hover:border-emerald-400 flex flex-col justify-between"
                   >
                     <div>
-                      <div className="w-14 h-14 rounded-2xl overflow-hidden mb-5 group-hover:scale-105 transition-transform border border-emerald-200 shadow-xs">
-                        <img
-                          src={orangeBlossomBranchImg}
-                          alt="Flores de Laranjeira"
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-rose-500 flex items-center justify-center text-white mb-5 group-hover:scale-105 transition-transform shadow-xs ring-2 ring-emerald-100">
+                        <Flower2 className="w-7 h-7 text-white transition-transform group-hover:rotate-12" />
                       </div>
                       <h3 className="font-serif text-2xl font-bold text-[#143823] mb-2">
                         Mentora Florescer Diário

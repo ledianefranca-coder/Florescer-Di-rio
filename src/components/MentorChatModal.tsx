@@ -11,9 +11,9 @@ import {
   HeartHandshake,
   BookOpen,
   Compass,
+  Flower2,
 } from 'lucide-react';
 import { soundManager } from '../utils/audioSynth';
-import orangeBlossomBranchImg from '../assets/images/orange_blossom_branch_1786992766212.jpg';
 
 interface Message {
   id: string;
@@ -141,12 +141,8 @@ Como está o seu coração hoje? Qual situação, sentimento de não pertencimen
         {/* Top bar */}
         <div className="px-6 py-4 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-b border-emerald-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-emerald-300 shadow-xs flex-shrink-0">
-              <img
-                src={orangeBlossomBranchImg}
-                alt="Flores de Laranjeira"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-rose-500 flex items-center justify-center text-white ring-2 ring-emerald-200/90 shadow-xs flex-shrink-0">
+              <Flower2 className="w-5 h-5 text-white" />
             </div>
             <div>
               <h3 className="font-serif text-xl font-bold text-[#143823] leading-tight">
@@ -161,7 +157,7 @@ Como está o seu coração hoje? Qual situação, sentimento de não pertencimen
           <button
             onClick={handleClearHistory}
             title="Limpar histórico da conversa"
-            className="p-2 rounded-xl text-emerald-800 hover:text-emerald-950 hover:bg-emerald-100/50 transition-all"
+            className="p-2 rounded-xl text-emerald-800 hover:text-emerald-950 hover:bg-emerald-100/50 transition-all cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -177,12 +173,8 @@ Como está o seu coração hoje? Qual situação, sentimento de não pertencimen
                 className={`flex gap-3 sm:gap-4 ${isBot ? 'justify-start' : 'justify-end'} animate-in fade-in`}
               >
                 {isBot && (
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-emerald-200 flex-shrink-0 shadow-2xs mt-1">
-                    <img
-                      src={orangeBlossomBranchImg}
-                      alt="Flores de Laranjeira"
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-rose-500 flex items-center justify-center text-white flex-shrink-0 shadow-2xs mt-1 ring-1 ring-emerald-200">
+                    <Flower2 className="w-4 h-4 text-white" />
                   </div>
                 )}
 
