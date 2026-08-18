@@ -1,0 +1,6 @@
+{
+  "name": "Florescer Diário - Consciência Feminina",
+  "description": "Plataforma de desenvolvimento feminino, autoestima, identidade, merecimento, relacionamentos conscientes, psicanálise de Carl Jung, sabedoria bíblica e autorresponsabilidade. Desenvolvido por Lediane França.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
