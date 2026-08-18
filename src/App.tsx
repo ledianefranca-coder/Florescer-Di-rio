@@ -152,7 +152,7 @@ export default function App() {
                       </p>
                     </div>
                     <div className="mt-6 pt-4 border-t border-rose-100 flex items-center text-xs font-semibold text-rose-700 group-hover:text-rose-900">
-                      <span>Falar com a Terapeuta</span>
+                      <span>Falar com a Mentora</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>

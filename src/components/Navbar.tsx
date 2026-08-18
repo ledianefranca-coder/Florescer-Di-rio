@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ActiveTab } from '../types';
 import {
   Sparkles,
@@ -14,6 +14,8 @@ import {
   X,
   Flower2,
   Heart,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { soundManager } from '../utils/audioSynth';
 
@@ -25,6 +27,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   const [isMuted, setIsMuted] = useState(soundManager.getMuted());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const scrollNavRef = useRef<HTMLDivElement>(null);
 
   const toggleAudio = () => {
     const nextState = !isMuted;
@@ -45,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
     { id: 'relationships' as ActiveTab, label: 'Relacionamentos', icon: HeartHandshake },
     { id: 'archetypes' as ActiveTab, label: 'Arquétipos', icon: BookOpen },
     { id: 'journal' as ActiveTab, label: 'Diário da Alma', icon: Feather },
-    { id: 'sanctuary' as ActiveTab, label: 'Oásis de Paz', icon: Wind },
+    { id: 'sanctuary' as ActiveTab, label: 'Oásis de Paz, Quietude & Merecimento', icon: Wind },
   ];
 
   const handleNavClick = (tab: ActiveTab) => {
@@ -54,10 +57,17 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
     soundManager.playSingingBowl(440, 1.2);
   };
 
+  const scrollNav = (direction: 'left' | 'right') => {
+    if (scrollNavRef.current) {
+      const scrollAmount = direction === 'left' ? -220 : 220;
+      scrollNavRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-200/80 shadow-2xs">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Top Header Row: Brand Logo, Audio Toggle & Therapist Action Button */}
+        {/* Top Header Row: Brand Logo, Audio Toggle & Mentora Action Button */}
         <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           {/* Logo & Brand - Fixed and Proportionate in Full Screen */}
           <button
@@ -78,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             </div>
           </button>
 
-          {/* Right Controls: Audio + Falar com a Terapeuta CTA */}
+          {/* Right Controls: Audio + Falar com a Mentora CTA */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             {/* Audio Ambient Toggle */}
             <button
@@ -94,16 +104,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-emerald-800 animate-pulse" />}
             </button>
 
-            {/* Botão Falar com a Terapeuta - Ícone Florescer Diário & Cor Rosa */}
+            {/* Botão Falar com a Mentora - Ícone Florescer Diário & Cor Rosa */}
             <button
-              id="header-cta-therapist"
+              id="header-cta-mentor"
               onClick={() => handleNavClick('mentor')}
               className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 hover:from-pink-600 hover:to-rose-600 text-white text-xs sm:text-xs font-semibold tracking-wide shadow-sm hover:shadow-md transition-all transform active:scale-95 border border-pink-200/90 group flex-shrink-0 cursor-pointer"
             >
               <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-rose-500 flex items-center justify-center text-white ring-1 ring-white/90 shadow-2xs group-hover:scale-110 transition-transform flex-shrink-0">
                 <Flower2 className="w-3 h-3 text-white" />
               </div>
-              <span className="font-semibold text-white drop-shadow-2xs whitespace-nowrap">Falar com a Terapeuta</span>
+              <span className="font-semibold text-white drop-shadow-2xs whitespace-nowrap">Falar com a Mentora</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -117,9 +127,21 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
           </div>
         </div>
 
-        {/* Top Navigation Bar: All Buttons Arranged with Sizing and Spacing */}
-        <div className="hidden lg:flex items-center justify-between border-t border-emerald-100/90 py-2 overflow-x-auto scrollbar-none">
-          <nav className="flex items-center gap-1.5 w-full justify-between">
+        {/* Top Navigation Bar: Full Scrollable Menu with Arrow Helpers */}
+        <div className="hidden lg:flex items-center border-t border-emerald-100/90 py-2.5 relative group/nav">
+          <button
+            onClick={() => scrollNav('left')}
+            className="p-1 rounded-full text-emerald-700 hover:bg-emerald-100 hover:text-emerald-900 transition-colors mr-1 cursor-pointer flex-shrink-0 opacity-70 hover:opacity-100"
+            title="Rolar abas para a esquerda"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <div
+            ref={scrollNavRef}
+            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scroll-smooth py-1 px-1 w-full"
+            style={{ scrollbarWidth: 'thin' }}
+          >
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -128,10 +150,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                   key={item.id}
                   id={`nav-btn-${item.id}`}
                   onClick={() => handleNavClick(item.id)}
-                  className={`flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer flex-shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer flex-shrink-0 ${
                     isActive
                       ? 'bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 text-white shadow-xs'
-                      : 'text-[#2D503B] hover:text-emerald-950 hover:bg-emerald-50/90'
+                      : 'text-[#2D503B] hover:text-emerald-950 hover:bg-emerald-50/90 border border-emerald-100/60'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-200' : 'text-emerald-600'}`} />
@@ -139,13 +161,21 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                 </button>
               );
             })}
-          </nav>
+          </div>
+
+          <button
+            onClick={() => scrollNav('right')}
+            className="p-1 rounded-full text-emerald-700 hover:bg-emerald-100 hover:text-emerald-900 transition-colors ml-1 cursor-pointer flex-shrink-0 opacity-70 hover:opacity-100"
+            title="Rolar abas para a direita"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-emerald-200 bg-[#F7FCF9] px-4 pt-3 pb-6 space-y-1.5 animate-in fade-in slide-in-from-top-2">
+        <div className="lg:hidden border-b border-emerald-200 bg-[#F7FCF9] px-4 pt-3 pb-6 space-y-1.5 animate-in fade-in slide-in-from-top-2 max-h-[80vh] overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -173,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-600 to-rose-500 flex items-center justify-center text-white ring-1 ring-white/90 shadow-2xs flex-shrink-0">
                 <Flower2 className="w-3 h-3 text-white" />
               </div>
-              <span>Falar com a Terapeuta</span>
+              <span>Falar com a Mentora</span>
             </button>
           </div>
         </div>
